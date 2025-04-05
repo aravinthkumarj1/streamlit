@@ -27,8 +27,10 @@ with st.sidebar:
     volatile_only = st.checkbox("Show only volatile stocks (>5% daily movement)")
 
     # Handle NaN max value for slider
-    max_2025 = df['2025'].dropna().max()
-    if pd.isna(max_2025):
+    valid_growth = df['2025'].dropna()
+    if not valid_growth.empty:
+        max_2025 = valid_growth.max()
+    else:
         max_2025 = 100
     min_2025_growth = st.slider("Minimum 2025 Growth %", min_value=0, max_value=int(max_2025), value=0)
 
